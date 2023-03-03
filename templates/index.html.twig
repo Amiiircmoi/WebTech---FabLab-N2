@@ -1,0 +1,84 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<section class="banner" id="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="left-banner-content">
+						<div class="p-4 page-title">
+							<h6>Bienvenue !</h6>
+							<h1>
+								<b>BY ME BY BO</b>
+							</h1>
+							<div class="line-dec"></div>
+							<h2>N'attendez plus ! On s'occupe de tout</h2>
+							<div class="white-button">
+								<a href="{{ path('app_form') }}" data-id="best-offer-section">Réserver</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="right-banner-content">
+						<div class="logo">
+							<a href="{{ path('app_form') }}"><img src="{{ asset('build/images/logo.png') }}" alt="By me By BO logo" width="100%"></a>
+						</div>
+						<div class="line-dec"></div>
+						<p>
+							“ By me By BO est votre partenaire pour tous les évènements marquants de votre vie ou de votre entreprise. ”</p>
+						<ul class="social-icons">
+							<li>
+								<a href="https://www.instagram.com/by_me_by_bo/" target="_blank">
+									<i class="fa fa-instagram"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	<section class="best-offer" id="best-offer-section">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="best-offer-left-content">
+						<div class="icon"><img src="img/best-offer-icon.png" alt=""></div>
+						<h4></h4>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<div class="best-offer-right-content">
+						<div class="row">
+							<div class="col-md-6 col-sm-12">
+								<h2>Nous vous accompagnons
+									<em>pour vos évènements</em>
+									!</h2>
+								<p>By me By BO vous accompagne dans les évènements suivants :
+								</p>
+								<ul>
+									<li>Mariage / Fiançailles</li>
+									<li>Anniversaires</li>
+									<li>Baby shower</li>
+									<li>Candy bar</li>
+									<li>Baptême</li>
+									<li>Location</li>
+								</ul>
+								<p>Nous vous accompagnons, pour la réussite de votre évènement dans la France entière.</p>
+								<div class="pink-button">
+									<a href="{{ path('app_form') }}" data-id="events-section">Contactez nous !</a>
+								</div>
+							</div>
+							<div class="col-md-6 col-sm-12">
+								<img class="best-of-illustration" src="img/best-offer-image.jpg" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

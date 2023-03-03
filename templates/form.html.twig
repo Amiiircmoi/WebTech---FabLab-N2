@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+	<section class="contact-us" id="contact-section">
+		<div class="container-fluid">
+			<div class="row">
+				<form id="contact" action="" method="post">
+					<div class="row">
+						<div class="col-md-4">
+							<fieldset>
+								<input name="name" type="text" class="form-control" id="name" placeholder="Prénom NOM..." required="">
+							</fieldset>
+						</div>
+						<div class="col-md-4">
+							<fieldset>
+								<input name="email" type="email" class="form-control" id="email" placeholder="Adresse mail..." required="">
+							</fieldset>
+						</div>
+						<div class="col-md-4">
+							<fieldset>
+								<input name="entreprise" type="text" class="form-control" id="entreprise" placeholder="Entreprise...">
+							</fieldset>
+						</div>
+						<div class=" col-md-12">
+							<fieldset>
+								<input name="subject" type="text" class="form-control" id="subject" placeholder="Sujet..." required="">
+							</fieldset>
+						</div>
+						<div class="col-md-12">
+							<fieldset>
+								<textarea name="message" rows="6" class="form-control" id="message" placeholder="Votre message..." required=""></textarea>
+							</fieldset>
+						</div>
+						<div class="col-md-6">
+							<fieldset>
+								<a href="{{ path('app_index') }}">
+									<button class="btn btn-primary" type="button">Retourner à l'accueil</button>
+								</a>
+								<button type="submit" id="form-submit" class="btn">Envoyer maintenant</button>
+							</fieldset>
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+{% endblock %}
