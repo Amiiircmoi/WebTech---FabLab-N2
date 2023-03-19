@@ -1,0 +1,71 @@
+{% extends "dashboard/base.html.twig" %}
+
+{% block body %}
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Demandes</h1>
+	</div>
+
+	<div class="row justify-content-center">
+		<div class="col-xl-12 col-lg-11">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+					<b>
+						{% if form.status == 0 %}
+							<a href="{{ path('app_dashboard_form_status', {'id': form.id, 'status': 1}) }}">
+								<span class="badge badge-warning">En attente</span>
+							</a>
+						{% elseif form.status == 1 %}
+							<a href="{{ path('app_dashboard_form_status', {'id': form.id, 'status': 0}) }}">
+								<span class="badge badge-success">Traité</span>
+							</a>
+						{% endif %}
+						{{ form.eventType.name }}
+					</b>
+					Événement prévu pour le
+					{{ form.eventDate|date('d/m/Y') }}</div>
+				<div class="card-body my-4">
+					<div class="row">
+						<div class="col-4 text-center">
+							<h4 class="mb-4">Contact</h4>
+							<p>
+								<b>Nom :</b>
+								{{ form.contactName }}
+							</p>
+							<p>
+								<b>Mail :</b>
+								{{ form.contactMail }}
+							</p>
+							{% if form.contactPhone %}
+								<p>
+									<b>Téléphone :</b>
+									{{ form.contactPhone }}
+								</p>
+							{% endif %}
+						</div>
+						<div class="col-8 text-center">
+							<h4 class="mb-4">Description</h4>
+							<p>{{ form.message }}</p>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer py-3 align-items-center">
+					<div class="text-center">
+						Envoyé le
+						{{ form.eventDate|date('d/m/Y') }}
+					</div>
+					<div class="row justify-content-between mt-3">
+						<div class="col-2">
+							<a href="{{ path('app_dashboard_form_list') }}" class="btn btn-secondary">
+								<i class="fa-solid fa-circle-left"></i>
+								Retour</a>
+						</div>
+						<div class="col-2 text-end">
+							{% include "dashboard/form/_delete_form.html.twig" %}
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

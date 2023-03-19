@@ -15,8 +15,47 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', []);
     }
 
+    /*
+    Demandes
+    */
+
     #[Route('/demandes', name: 'form_list')]
-    public function formList(): Response
+    public function formList(ContactFormRepository $contactFormRepository): Response
+    {
+        return $this->render('dashboard/form/index.html.twig', [
+            'forms' => $contactFormRepository->findBy([], ['createdAt' => 'DESC']),
+        ]);
+    }
+
+    #[Route('/demandes/{id}', name: 'form_show', methods: ['GET'])]
+    public function formShow(ContactForm $contactForm): Response
+    {
+        return $this->render('dashboard/form/show.html.twig', [
+            'form' => $contactForm,
+        ]);
+    }
+
+    #[Route('/demandes/remove/{id}', name: 'form_delete', methods: ['POST'])]
+    public function deleteForm(Request $request, ContactForm $contactForm, ContactFormRepository $contactFormRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$contactForm->getId(), $request->request->get('_token'))) {
+            $contactFormRepository->remove($contactForm, true);
+        }
+
+        return $this->redirectToRoute('app_dashboard_form_list', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/demandes/{id}/status/{status}', name: 'form_status', methods: ['GET'])]
+    public function formChangeStatus(ContactForm $contactForm, int $status, ContactFormRepository $contactFormRepository): Response
+    {
+        $contactForm->setStatus($status);
+        $contactFormRepository->save($contactForm, true);
+
+        return $this->redirectToRoute('app_dashboard_form_show', [
+            'id' => $contactForm->getId(),
+        ], Response::HTTP_SEE_OTHER);
+    }
+
     /*
     Types d'événements
     */
