@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<title>BY ME BY BO - Connexion</title>
+		{{ encore_entry_link_tags('global') }}
+	</head>
+	<body>
+		<section class="vh-100" style="background-color: rgba(244, 188, 81, 0.8);">
+			<div class="container py-5 h-100">
+				<div class="row d-flex justify-content-center align-items-center">
+					<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+						<div class="card shadow-2-strong" style="border-radius: 1rem;">
+							<div class="card-body p-5 text-center">
+
+								<form action="{{ path('app_login') }}" method="post">
+
+									<h1>BY ME BY BO</h1>
+									<p class="mb-5">Tableau de bord</p>
+
+									<h3 class="mb-5">Connexion</h3>
+
+									<div class="form-outline mb-4">
+										<input type="text" id="username" name="_username" placeholder="Nom d'utilisateur" value="{{ last_username }}" class="form-control form-control-lg {{ error ? 'is-invalid' : ''}}"/>
+									</div>
+
+									<div class="form-outline mb-4">
+										<input type="password" id="password" name="_password" placeholder="Mot de passe" class="form-control form-control-lg {{ error ? 'is-invalid' : ''}}"/>
+									</div>
+
+									{% if error %}
+										<p class="text-danger">Nom d'utilisateur ou mot de passe incorrect.</p>
+									{% endif %}
+
+									<input type="hidden" name="_target_path" value="{{ path('app_dashboard_index') }}">
+									<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+
+									<button class="btn btn-primary btn-lg btn-block mt-3" type="submit">
+										<i class="fas fa-right-to-bracket"></i>
+									</button>
+
+								</form>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		{{ encore_entry_script_tags('app') }}
+	</body>
+</html>

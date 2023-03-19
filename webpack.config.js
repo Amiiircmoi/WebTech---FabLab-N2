@@ -24,6 +24,9 @@ Encore
 
     .addStyleEntry('global', './assets/styles/app.scss')
 
+    .addStyleEntry('dashboard_style', './assets/styles/dashboard/style.scss')
+    .addEntry('dashboard_script', './assets/js/dashboard/script.js')
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
 
