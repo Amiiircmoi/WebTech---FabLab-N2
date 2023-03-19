@@ -40,6 +40,7 @@ class ContactFormType extends AbstractType
                 ],
             ])
             ->add('contactPhone', TelType::class, [
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Téléphone (optionnel)',
                 ],
@@ -48,6 +49,8 @@ class ContactFormType extends AbstractType
                 'class' => EventType::class,
                 'choice_label' => 'name',
                 'label' => 'Type d\'événement',
+                'placeholder' => 'Autre',
+                'required' => false,
                 'attr' => [
                     'placeholder' => 'Type d\'événement',
                 ],
