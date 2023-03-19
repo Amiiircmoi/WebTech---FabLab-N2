@@ -1,0 +1,51 @@
+{% extends "public/base.html.twig" %}
+
+{% block body %}
+	<section class="contact-us">
+		<div class="container-fluid">
+			<div class="row">
+				{{ form_start(form, {'attr': {'id': 'contact'}}) }}
+				<div class="row">
+					<h1>CONTACTER BY ME BY BO</h1>
+					<hr class="mb-5 border-dark border-3 opacity-75">
+					<div class="col-md-4">
+						{{ form_errors(form.contactName) }}
+						{{ form_widget(form.contactName) }}
+					</div>
+					<div class="col-md-4">
+						{{ form_errors(form.contactMail) }}
+						{{ form_widget(form.contactMail) }}
+					</div>
+					<div class="col-md-4">
+						{{ form_errors(form.contactPhone) }}
+						{{ form_widget(form.contactPhone) }}
+					</div>
+					<div class=" col-md-6">
+						{{ form_label(form.eventType) }}
+						{{ form_errors(form.eventType) }}
+						{{ form_widget(form.eventType) }}
+					</div>
+					<div class=" col-md-6">
+						{{ form_errors(form.eventDate) }}
+						{{ form_widget(form.eventDate) }}
+					</div>
+					<div class="col-md-12">
+						{{ form_label(form.message) }}
+						{{ form_errors(form.message) }}
+						{{ form_widget(form.message) }}
+					</div>
+					<div class="col-md-6">
+						<fieldset>
+							<a href="{{ path('app_index') }}">
+								<button class="btn btn-dark" type="button">Retourner à l'accueil</button>
+							</a>
+							<button type="submit" id="form-submit" class="btn btn-light">Envoyer maintenant</button>
+						</fieldset>
+
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</section>
+{% endblock %}
