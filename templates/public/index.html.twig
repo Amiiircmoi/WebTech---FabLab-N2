@@ -58,12 +58,9 @@
 								<p>By me By BO vous accompagne dans les évènements suivants :
 								</p>
 								<ul>
-									<li>Mariage / Fiançailles</li>
-									<li>Anniversaires</li>
-									<li>Baby shower</li>
-									<li>Candy bar</li>
-									<li>Baptême</li>
-									<li>Location</li>
+									{% for eventType in eventTypes %}
+										<li>{{ eventType.name }}</li>
+									{% endfor %}
 								</ul>
 								<p>Nous vous accompagnons, pour la réussite de votre évènement dans la France entière.</p>
 								<div class="pink-button">

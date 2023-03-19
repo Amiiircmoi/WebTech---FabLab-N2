@@ -39,6 +39,22 @@ class EventTypeRepository extends ServiceEntityRepository
         }
     }
 
+    public function move(EventType $entity, string $direction): void
+    {
+        if ($direction === 'up') {
+            if ($entity->getPosition() > 1) {
+                $this->findOneBy(['position' => $entity->getPosition() - 1])->setPosition($entity->getPosition());
+                $entity->setPosition($entity->getPosition() - 1);
+            }
+        } elseif ($direction === 'down') {
+            if ($entity->getPosition() < $this->count([])) {
+                $this->findOneBy(['position' => $entity->getPosition() + 1])->setPosition($entity->getPosition());
+                $entity->setPosition($entity->getPosition() + 1);
+            }
+        }
+        $this->getEntityManager()->flush();
+    }
+
 //    /**
 //     * @return EventType[] Returns an array of EventType objects
 //     */
