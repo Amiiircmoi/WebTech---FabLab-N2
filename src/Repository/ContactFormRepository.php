@@ -39,6 +39,20 @@ class ContactFormRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLastMonth(array $criteres = [])
+    {
+        $query = $this->findBy($criteres, ['createdAt' => 'DESC']);
+        $query = array_filter($query, function ($entity) {
+            return $entity->getCreatedAt() > new \DateTime('-1 month');
+        });
+        return $query;
+    }
+
+    public function findLastMonthCount()
+    {
+        return $this->findLastMonth() ? count($this->findLastMonth()) : 0;
+    }
+
 //    /**
 //     * @return ContactForm[] Returns an array of ContactForm objects
 //     */

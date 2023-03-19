@@ -2,7 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\ContactForm;
+use App\Entity\EventType;
+use App\Form\EventTypeType;
+use App\Repository\ContactFormRepository;
+use App\Repository\EventTypeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,9 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(): Response
+    public function index(ContactFormRepository $contactFormRepository): Response
     {
-        return $this->render('dashboard/index.html.twig', []);
+        return $this->render('dashboard/index.html.twig', [
+            'demandesAttentes' => $contactFormRepository->count(['status' => 0]),
+            'demandesMensuelles' => $contactFormRepository->findLastMonthCount(),
+            'demandesTraitees' => $contactFormRepository->count(['status' => 1]) / $contactFormRepository->count([]) * 100,
+            'demandesTotales' => $contactFormRepository->count([]),
+            'forms' => $contactFormRepository->findLastMonth(['status' => 0]),
+        ]);
     }
 
     /*
