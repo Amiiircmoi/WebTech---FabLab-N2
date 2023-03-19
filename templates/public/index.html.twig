@@ -1,4 +1,4 @@
-{% extends "base.html.twig" %}
+{% extends "public/base.html.twig" %}
 
 {% block body %}
 	<section class="banner" id="top">
@@ -14,7 +14,7 @@
 							<div class="line-dec"></div>
 							<h2>N'attendez plus ! On s'occupe de tout</h2>
 							<div class="white-button">
-								<a href="{{ path('app_form') }}" data-id="best-offer-section">Réserver</a>
+								<a href="{{ path('app_form') }}">Réserver</a>
 							</div>
 						</div>
 					</div>
@@ -30,7 +30,7 @@
 						<ul class="social-icons">
 							<li>
 								<a href="https://www.instagram.com/by_me_by_bo/" target="_blank">
-									<i class="fa fa-instagram"></i>
+									<i class="fa-brands fa-instagram"></i>
 								</a>
 							</li>
 						</ul>
@@ -40,20 +40,18 @@
 		</div>
 	</section>
 
-
-	<section class="best-offer" id="best-offer-section">
+	<section class="description" id="description-section">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-4">
-					<div class="best-offer-left-content">
+					<div class="description-left-content">
 						<div class="icon"><img src="img/best-offer-icon.png" alt=""></div>
-						<h4></h4>
 					</div>
 				</div>
 				<div class="col-md-8">
-					<div class="best-offer-right-content">
+					<div class="description-right-content">
 						<div class="row">
-							<div class="col-md-6 col-sm-12">
+							<div class="col-md-12 col-sm-12">
 								<h2>Nous vous accompagnons
 									<em>pour vos évènements</em>
 									!</h2>
@@ -69,11 +67,8 @@
 								</ul>
 								<p>Nous vous accompagnons, pour la réussite de votre évènement dans la France entière.</p>
 								<div class="pink-button">
-									<a href="{{ path('app_form') }}" data-id="events-section">Contactez nous !</a>
+									<a href="{{ path('app_form') }}">Contactez nous !</a>
 								</div>
-							</div>
-							<div class="col-md-6 col-sm-12">
-								<img class="best-of-illustration" src="img/best-offer-image.jpg" alt="">
 							</div>
 						</div>
 					</div>
