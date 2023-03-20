@@ -1,0 +1,62 @@
+{% extends "dashboard/base.html.twig" %}
+
+{% block body %}
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Réseaux sociaux</h1>
+		<a href="{{ path('app_dashboard_social_new') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+			<i class="fas fa-circle-plus fa-sm text-white-50"></i>
+			Ajouter un réseau social</a>
+	</div>
+
+	<div class="row">
+		<div class="col-xl-12 col-lg-11">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"></div>
+				<div class="card-body">
+					<table class="table table-borderless table-hover">
+						<thead>
+							<tr>
+								<th scope="col" width="5%">Position</th>
+								<th scope="col" width="35%">Nom</th>
+								<th scope="col" width="35%">Lien</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for social in socials %}
+								<tr>
+									<td class="align-middle">{{ social.position }}</td>
+									<td class="align-middle">{{ social.name }}</td>
+									<td class="align-middle">{{ social.link }}</td>
+									<td class="align-middle">
+										{% if social.position > 1 %}
+											<a title="Monter" href="{{ path('app_dashboard_social_move', {'id': social.id, 'direction': 'up'}) }}" class="btn btn-circle btn-info">
+												<i class="fa-solid fa-turn-up"></i>
+											</a>
+										{% endif %}
+										{% if social.position < socials|length %}
+											<a title="Descendre" href="{{ path('app_dashboard_social_move', {'id': social.id, 'direction': 'down'}) }}" class="btn btn-circle btn-info">
+												<i class="fa-solid fa-turn-down"></i>
+											</a>
+										{% endif %}
+									</td>
+									<td class="align-middle">
+										<a title="Éditer" href="{{ path('app_dashboard_type_edit', {'id': social.id}) }}" class="btn btn-circle btn-warning">
+											<i class="fas fa-edit"></i>
+										</a>
+									</td>
+									<td class="align-middle">
+										{% include "dashboard/social_medias/_delete_form.html.twig" %}
+									</td>
+								</tr>
+							{% else %}
+								<tr>
+									<td colspan="3">Aucun réseau social</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

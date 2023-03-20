@@ -29,9 +29,11 @@
 							“ By me By BO est votre partenaire pour tous les évènements marquants de votre vie ou de votre entreprise. ”</p>
 						<ul class="social-icons">
 							<li>
-								<a href="https://www.instagram.com/by_me_by_bo/" target="_blank">
-									<i class="fa-brands fa-instagram"></i>
-								</a>
+								{% for social in socialMedias %}
+									<a title="{{ social.name }}" href="{{ social.link }}" target="_blank">
+										<i class="fa-brands fa-{{ social.icon }}"></i>
+									</a>
+								{% endfor %}
 							</li>
 						</ul>
 					</div>

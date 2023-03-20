@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html.twig" %}
+
+{% block body %}
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Réseaux sociaux</h1>
+	</div>
+
+	<div class="row justify-content-center mt-5">
+		<div class="col-xl-10 col-lg-9 mt-5">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">Nouveau</div>
+				<div class="card-body">
+					{% include "dashboard/social_medias/_form.html.twig" %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

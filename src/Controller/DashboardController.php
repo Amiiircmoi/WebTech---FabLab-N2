@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\ContactForm;
 use App\Entity\EventType;
+use App\Entity\SocialMedia;
 use App\Form\EventTypeType;
+use App\Form\SocialMediaType;
 use App\Repository\ContactFormRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\SocialMediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -133,5 +136,72 @@ class DashboardController extends AbstractController
         $eventTypeRepository->move($eventType, $direction);
 
         return $this->redirectToRoute('app_dashboard_type_list', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /*
+    Réseaux sociaux
+    */
+
+    #[Route('/reseaux-sociaux', name: 'social_list')]
+    public function socialList(SocialMediaRepository $socialMediaRepository): Response
+    {
+        return $this->render('dashboard/social_medias/index.html.twig', [
+            'socials' => $socialMediaRepository->findBy([], ['position' => 'ASC']),
+        ]);
+    }
+
+    #[Route('/reseaux-sociaux/nouveau', name: 'social_new', methods: ['GET', 'POST'])]
+    public function newSocial(Request $request, SocialMediaRepository $socialMediaRepository): Response
+    {
+        $socialMedia = new SocialMedia();
+        $form = $this->createForm(SocialMediaType::class, $socialMedia);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $socialMedia->setPosition($socialMediaRepository->count([]) + 1);
+            $socialMediaRepository->save($socialMedia, true);
+
+            return $this->redirectToRoute('app_dashboard_social_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/social_medias/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/reseaux-sociaux/{id}', name: 'social_edit', methods: ['GET', 'POST'])]
+    public function editSocial(Request $request, SocialMedia $socialMedia, SocialMediaRepository $socialMediaRepository): Response
+    {
+        $form = $this->createForm(SocialMediaType::class, $socialMedia);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $socialMediaRepository->save($socialMedia, true);
+
+            return $this->redirectToRoute('app_dashboard_social_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/social_medias/edit.html.twig', [
+            'socialMedia' => $socialMedia,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/reseaux-sociaux/remove/{id}', name: 'social_delete', methods: ['POST'])]
+    public function deleteSocial(Request $request, SocialMedia $socialMedia, SocialMediaRepository $socialMediaRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$socialMedia->getId(), $request->request->get('_token'))) {
+            $socialMediaRepository->remove($socialMedia, true);
+        }
+
+        return $this->redirectToRoute('app_dashboard_social_list', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/reseaux-sociaux/{id}/move/{direction}', name: 'social_move', methods: ['GET'])]
+    public function moveSocial(SocialMedia $socialMedia, string $direction, SocialMediaRepository $socialMediaRepository): Response
+    {
+        $socialMediaRepository->move($socialMedia, $direction);
+
+        return $this->redirectToRoute('app_dashboard_social_list', [], Response::HTTP_SEE_OTHER);
     }
 }

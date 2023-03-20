@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('app_dashboard_social_delete', {'id': social.id}) }}" onsubmit="return confirm('Êtes vous sûr de vouloir supprimer ce réseau social ?');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ social.id) }}">
+	<button title="Supprimer" class="btn btn-circle btn-danger">
+		<i class="fa-solid fa-trash"></i>
+	</button>
+</form>
