@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\ContactForm;
+use App\Entity\ContactMail;
 use App\Entity\EventType;
 use App\Entity\SocialMedia;
+use App\Form\ContactMailType;
 use App\Form\EventTypeType;
 use App\Form\SocialMediaType;
 use App\Repository\ContactFormRepository;
+use App\Repository\ContactMailRepository;
 use App\Repository\EventTypeRepository;
 use App\Repository\SocialMediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -203,5 +206,63 @@ class DashboardController extends AbstractController
         $socialMediaRepository->move($socialMedia, $direction);
 
         return $this->redirectToRoute('app_dashboard_social_list', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /*
+    Contact
+    */
+
+    #[Route('/contact', name: 'contact_list')]
+    public function mailList(ContactMailRepository $contactMailRepository): Response
+    {
+        return $this->render('dashboard/contact/index.html.twig', [
+            'contacts' => $contactMailRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/contact/nouveau', name: 'contact_new', methods: ['GET', 'POST'])]
+    public function newMail(Request $request, ContactMailRepository $contactMailRepository): Response
+    {
+        $contactMail = new ContactMail();
+        $form = $this->createForm(ContactMailType::class, $contactMail);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactMailRepository->save($contactMail, true);
+
+            return $this->redirectToRoute('app_dashboard_contact_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/contact/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/contact/{id}', name: 'contact_edit', methods: ['GET', 'POST'])]
+    public function editMail(Request $request, ContactMail $contactMail, ContactMailRepository $contactMailRepository): Response
+    {
+        $form = $this->createForm(ContactMailType::class, $contactMail);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $contactMailRepository->save($contactMail, true);
+
+            return $this->redirectToRoute('app_dashboard_contact_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/contact/edit.html.twig', [
+            'contactMail' => $contactMail,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/contact/remove/{id}', name: 'contact_delete', methods: ['POST'])]
+    public function deleteMail(Request $request, ContactMail $contactMail, ContactMailRepository $contactMailRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$contactMail->getId(), $request->request->get('_token'))) {
+            $contactMailRepository->remove($contactMail, true);
+        }
+
+        return $this->redirectToRoute('app_dashboard_contact_list', [], Response::HTTP_SEE_OTHER);
     }
 }
