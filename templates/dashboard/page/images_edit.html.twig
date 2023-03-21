@@ -1,0 +1,104 @@
+{% extends "dashboard/base.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('global') }}
+{% endblock %}
+
+{% block body %}
+	<div class="d-sm-flex align-items-center justify-content-between mb-4">
+		<h1 class="h3 mb-0 text-gray-800">Page d'accueil</h1>
+	</div>
+
+	{{ form_start(form) }}
+	<button class="btn btn-success mb-4" type="submit">
+		<i class="fa-solid fa-floppy-disk"></i>
+		Enregistrer</button>
+
+	<div class="row">
+		<div class="col-xl-12 col-lg-11">
+			<div class="card shadow mb-4">
+				<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">Home (la mise à jour peux prendre du temps selon votre navigateur / cache)</div>
+				<div class="card-body">
+					<section class="banner" id="top">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="left-banner-content">
+										{{ form_row(form.banner) }}
+										<div class="p-4 page-title">
+											<h6>Bienvenue !</h6>
+											<h1>
+												<b>BY ME BY BO</b>
+											</h1>
+											<div class="line-dec"></div>
+											<h2>N'attendez plus ! On s'occupe de tout</h2>
+											<div class="white-button">
+												<a href="{{ path('app_form') }}">Réserver</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="right-banner-content">
+										<div class="logo">
+											<a href="{{ path('app_form') }}"><img src="{{ asset('build/images/logo.png') }}" alt="By me By BO logo" width="100%"></a>
+										</div>
+										{{ form_row(form.logo) }}
+										<div class="line-dec"></div>
+										<p>
+											“ By me By BO est votre partenaire pour tous les évènements marquants de votre vie ou de votre entreprise. ”</p>
+										<ul class="social-icons">
+											<li>
+												{% for social in socialMedias %}
+													<a title="{{ social.name }}" href="{{ social.link }}" target="_blank">
+														<i class="fa-brands fa-{{ social.icon }}"></i>
+													</a>
+												{% endfor %}
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+
+					<section class="description" id="description-section">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="description-left-content">
+										{{ form_row(form.eventimage) }}
+									</div>
+								</div>
+								<div class="col-md-8">
+									<div class="description-right-content">
+										<div class="row">
+											<div class="col-md-12 col-sm-12">
+												<h2>Nous vous accompagnons
+													<em>pour vos évènements</em>
+													!</h2>
+												<p>By me By BO vous accompagne dans les évènements suivants :
+												</p>
+												<ul>
+													{% for eventType in eventTypes %}
+														<li>{{ eventType.name }}</li>
+													{% endfor %}
+												</ul>
+												<p>Nous vous accompagnons, pour la réussite de votre évènement dans la France entière.</p>
+												<div class="pink-button">
+													<a href="{{ path('app_form') }}">Contactez nous !</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{ form_end(form) }}
+{% endblock %}

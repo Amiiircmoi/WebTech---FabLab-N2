@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="row justify-content-center">
+	<div class="col-4 text-center mb-3">
+		{{ form_widget(form.name) }}
+	</div>
+	<div class="col-4 text-center mb-3">
+		{{ form_widget(form.contentId) }}
+	</div>
+	<div class="col-4 text-center mb-3">
+		{{ form_widget(form.content) }}
+	</div>
+</div>
+<a href="{{ path('app_dashboard_contact_list') }}" class="btn btn-secondary">
+	<i class="fa-solid fa-circle-left"></i>
+	Retour</a>
+<button class="btn btn-success" type="submit">
+	<i class="fa-solid fa-floppy-disk"></i>
+	Enregistrer</button>
+{{ form_end(form) }}

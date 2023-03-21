@@ -1,8 +1,5 @@
-<!-- Sidebar -->
-<ul
-	class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-warning sidebar sidebar-dark accordion" id="accordionSidebar">
 
-	<!-- Sidebar - Brand -->
 	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ path('app_index') }}">
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fa-solid fa-house"></i>
@@ -11,7 +8,6 @@
 		</div>
 	</a>
 
-	<!-- Nav Item - Dashboard -->
 	<li class="nav-item active">
 		<a class="nav-link" href="{{ path('app_dashboard_index') }}">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
@@ -19,18 +15,14 @@
 		</a>
 	</li>
 
-	<!-- Divider -->
-	<hr
-	class="sidebar-divider">
+	<hr class="sidebar-divider">
 
-	<!-- Heading -->
 	<div class="sidebar-heading mt-3">
 		Bonjour
 		{{ app.user.username }}
 		!
 	</div>
 
-	<!-- Nav Item -->
 	<li class="nav-item">
 		<a class="nav-link" href="{{ path('app_logout') }}">
 			<i class="fa-solid fa-person-running"></i>
@@ -38,16 +30,12 @@
 		</a>
 	</li>
 
-	<!-- Divider -->
-	<hr
-	class="sidebar-divider">
+	<hr class="sidebar-divider">
 
-	<!-- Heading -->
 	<div class="sidebar-heading">
 		Communication
 	</div>
 
-	<!-- Nav Item - Charts -->
 	<li class="nav-item">
 		<a class="nav-link" href="{{ path('app_dashboard_form_list') }}">
 			<i class="fa-solid fa-address-book"></i>
@@ -55,16 +43,12 @@
 		</a>
 	</li>
 
-	<!-- Divider -->
-	<hr
-	class="sidebar-divider">
+	<hr class="sidebar-divider">
 
-	<!-- Heading -->
 	<div class="sidebar-heading">
 		Édition
 	</div>
 
-	<!-- Nav Items -->
 	<li class="nav-item">
 		<a class="nav-link" href="{{ path('app_dashboard_type_list') }}">
 			<i class="fa-solid fa-list"></i>
@@ -78,7 +62,7 @@
 		</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="charts.html">
+		<a class="nav-link" href="{{ path('app_dashboard_page_list') }}">
 			<i class="fa-regular fa-file"></i>
 			<span>Page d'accueil</span>
 		</a>
@@ -89,9 +73,4 @@
 			<span>Mails / Notifications</span>
 		</a>
 	</li>
-
-	<!-- Divider -->
-	<hr class="sidebar-divider d-none d-md-block">
-
 </ul>
-<!-- End of Sidebar -->

@@ -5,13 +5,17 @@ namespace App\Controller;
 use App\Entity\ContactForm;
 use App\Entity\ContactMail;
 use App\Entity\EventType;
+use App\Entity\PageContent;
 use App\Entity\SocialMedia;
 use App\Form\ContactMailType;
 use App\Form\EventTypeType;
+use App\Form\ImageType;
+use App\Form\PageContentType;
 use App\Form\SocialMediaType;
 use App\Repository\ContactFormRepository;
 use App\Repository\ContactMailRepository;
 use App\Repository\EventTypeRepository;
+use App\Repository\PageContentRepository;
 use App\Repository\SocialMediaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -264,5 +268,102 @@ class DashboardController extends AbstractController
         }
 
         return $this->redirectToRoute('app_dashboard_contact_list', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /*
+    Contenu de page
+    */
+
+    #[Route('/page', name: 'page_list')]
+    public function pageList(PageContentRepository $pageContentRepository): Response
+    {
+        return $this->render('dashboard/page/index.html.twig', [
+            'contents' => $pageContentRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/images/page', name: 'page_image_edit', methods: ['GET', 'POST'])]
+    public function editPageImage(Request $request, SocialMediaRepository $socialMediaRepository, EventTypeRepository $eventTypeRepository): Response
+    {
+        $form = $this->createForm(ImageType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $logo = $form->get('logo')->getData();
+            if ($logo && $logo->guessExtension() === 'png') {
+                $logo->move(
+                    $this->getParameter('images_directory'),
+                    'logo.png'
+                );
+            }
+            $banner = $form->get('banner')->getData();
+            if ($banner && $banner->guessExtension() === 'jpg') {
+                $banner->move(
+                    $this->getParameter('images_directory'),
+                    'banner-bg.jpg'
+                );
+            }
+            $eventimage = $form->get('eventimage')->getData();
+            if ($eventimage && $eventimage->guessExtension() === 'jpg') {
+                $eventimage->move(
+                    $this->getParameter('images_directory'),
+                    'by_me_acceuil.jpg'
+                );
+            }
+
+            return $this->redirectToRoute('app_dashboard_page_image_edit', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/page/images_edit.html.twig', [
+            'form' => $form,
+            'socialMedias' => $socialMediaRepository->findBy([], ['position' => 'ASC']),
+            'eventTypes' => $eventTypeRepository->findBy([], ['position' => 'ASC'])
+        ]);
+    }
+
+    #[Route('/page/nouveau', name: 'page_new', methods: ['GET', 'POST'])]
+    public function newPage(Request $request, PageContentRepository $pageContentRepository): Response
+    {
+        $pageContent = new PageContent();
+        $form = $this->createForm(PageContentType::class, $pageContent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pageContentRepository->save($pageContent, true);
+
+            return $this->redirectToRoute('app_dashboard_page_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/page/new.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/page/{id}', name: 'page_edit', methods: ['GET', 'POST'])]
+    public function editPage(Request $request, PageContent $pageContent, PageContentRepository $pageContentRepository): Response
+    {
+        $form = $this->createForm(PageContentType::class, $pageContent);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $pageContentRepository->save($pageContent, true);
+
+            return $this->redirectToRoute('app_dashboard_page_list', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('dashboard/page/edit.html.twig', [
+            'content' => $pageContent,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/contact/remove/{id}', name: 'contact_delete', methods: ['POST'])]
+    public function deletePage(Request $request, PageContent $pageContent, PageContentRepository $pageContentRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$pageContent->getId(), $request->request->get('_token'))) {
+            $pageContentRepository->remove($pageContent, true);
+        }
+
+        return $this->redirectToRoute('app_dashboard_page_list', [], Response::HTTP_SEE_OTHER);
     }
 }
