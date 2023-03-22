@@ -17,6 +17,11 @@
 								<a href="{{ path('app_form') }}">Réserver</a>
 							</div>
 						</div>
+						{% for flashMessage in app.session.flashbag.get('success') %}
+							<div class="alert alert-success" role="alert">
+								{{ flashMessage }}
+							</div>
+						{% endfor %}
 					</div>
 				</div>
 				<div class="col-md-4">
