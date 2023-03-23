@@ -31,7 +31,7 @@ class DashboardController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'demandesAttentes' => $contactFormRepository->count(['status' => 0]),
             'demandesMensuelles' => $contactFormRepository->findLastMonthCount(),
-            'demandesTraitees' => $contactFormRepository->count(['status' => 1]) / $contactFormRepository->count([]) * 100,
+            'demandesTraitees' => $contactFormRepository->count([]) > 0 ? $contactFormRepository->count(['status' => 1]) / $contactFormRepository->count([]) * 100 : 0,
             'demandesTotales' => $contactFormRepository->count([]),
             'forms' => $contactFormRepository->findLastMonth(['status' => 0]),
         ]);
